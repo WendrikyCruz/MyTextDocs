@@ -5,10 +5,12 @@ import com.MyTextDocs.MyTextDocs.Repository.TextoRepository;
 import com.MyTextDocs.MyTextDocs.Repository.UsuarioRepository;
 import com.MyTextDocs.MyTextDocs.Services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
@@ -21,7 +23,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Optional<Usuario> getUsuarioById(Long id) {
-        return Optional.empty();
+        return usuarioRepository.findById(id);
     }
 
     @Override

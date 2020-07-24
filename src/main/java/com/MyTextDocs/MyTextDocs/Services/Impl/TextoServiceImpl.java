@@ -1,14 +1,19 @@
 package com.MyTextDocs.MyTextDocs.Services.Impl;
 
 import com.MyTextDocs.MyTextDocs.Models.Texto;
+import com.MyTextDocs.MyTextDocs.Models.Usuario;
 import com.MyTextDocs.MyTextDocs.Repository.TextoRepository;
 import com.MyTextDocs.MyTextDocs.Repository.UsuarioRepository;
 import com.MyTextDocs.MyTextDocs.Services.TextoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class TextoServiceImpl implements TextoService {
 
     @Autowired
@@ -24,17 +29,33 @@ public class TextoServiceImpl implements TextoService {
 
     @Override
     public Optional<Texto> getTextoById(Long id) {
-        return Optional.empty();
+
+        return textoRepository.findById(id);
     }
 
     @Override
     public Optional<List<Texto>> getAllTextoByUsuario(Long idUsuario) {
+
         return Optional.empty();
     }
 
     @Override
     public Boolean newTexto(Texto texto, Long idUsuario) {
-        return null;
+
+        try{
+            Usuario usuario = usuarioRepository.findById(idUsuario).get();
+            texto.setUsuario(usuario);
+            texto.setData(LocalDate.now());
+
+            List<Texto> textos = usuario.getTextos();
+            textos.add(textoRepository.save(texto));
+            usuario.setTextos(textos);
+            usuarioRepository.save(usuario);
+            return true;
+        }
+        catch(Exception e) {
+            return false;
+        }
     }
 
     @Override

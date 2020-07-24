@@ -27,5 +27,43 @@ public class Usuario {
     private List<Texto> Textos;
 
 
+    public Long getId() {
+        return Id;
+    }
 
+    public void setId(Long id) {
+        Id = id;
+    }
+
+    public String getNome() {
+        return Nome;
+    }
+
+    public void setNome(String nome) {
+        Nome = nome;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public String getSenha() {
+        return Senha;
+    }
+
+    public void setSenha(String senha) {
+        Senha = senha;
+    }
+
+    public List<Texto> getTextos() {
+        return Textos;
+    }
+
+    public void setTextos(List<Texto> textos) {
+        Textos = textos;
+    }
 }
