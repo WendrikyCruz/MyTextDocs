@@ -14,6 +14,7 @@
     <title>Edita Texto</title>
 </head>
 <body>
+
 <!--Navbar-->
 <th:block th:include="BarraNavegacao"></th:block>
 <br>
@@ -30,11 +31,12 @@
             <span th:text="${mensagem}"></span>
         </div>
         <form method="post">
-            <div class="form-group">
+            <input class="form-group">
                 <label for="nomeDocumento">Nome Documento</label>
-                <input th:text="${texto.Nome}" id="nomeDocumento" name="Nome" type="text" class="form-control" placeholder="Nome do seu documento aqui..."/>
+                <input id="nomeDocumento" name="Nome" type="text" class="form-control" th:placeholder="${texto.Nome}"> <span th:text="${texto.Nome}"></span></input>
             </div>
-            <textarea id="summernote" type="text" th:utext="${texto.Texto}"  class="form-control" name="Texto">
+            <textarea id="summernote" type="text"   class="form-control" name="Texto">
+                <p th:text="${texto.Texto}"></p>
             </textarea>
             <button type="submit" class="btn btn-primary mt-2  btn-lg">Salvar <i class="material-icons mt-1">save</i></button>
         </form>

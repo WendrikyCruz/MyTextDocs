@@ -54,7 +54,7 @@
                             </div>
                             <div id="icones" class="container text-white bg-primary row">
                                 <div style="padding-left: 30px;">
-                                   <a >
+                                   <a class="text-white " th:href="${(#mvc.url('MTC#Editar').arg(0, texto.id)).build()}">
                                        <span data-toggle="tooltip" title="Editar"><i class="material-icons p-1">edit</i></span>
                                    </a>
                                     <a class="text-white" th:href="${(#mvc.url('MTC#getTexto').arg(0, texto.id)).build()}">
