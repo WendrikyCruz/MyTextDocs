@@ -1,10 +1,14 @@
 package com.MyTextDocs.MyTextDocs.Models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.itextpdf.html2pdf.HtmlConverter;
+import com.itextpdf.kernel.pdf.PdfWriter;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 
 @Entity
@@ -69,4 +73,6 @@ public class Texto {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+
 }

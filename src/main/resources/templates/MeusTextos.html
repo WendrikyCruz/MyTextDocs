@@ -11,6 +11,9 @@
     <th:block th:include="BarraNavegacao"></th:block>
     <br>
     <br>
+    <div class="alert alert-success alert-dismissible" role="alert" th:if="${not #strings.isEmpty(mensagemEditado)}">
+        <span th:text="${mensagemEditado}"></span>
+    </div>
 
     <!--Conteudo-->
     <div class="container-fluid">
@@ -60,8 +63,9 @@
                                     <a class="text-white" th:href="${(#mvc.url('MTC#getTexto').arg(0, texto.id)).build()}">
                                         <span data-toggle="tooltip" title="Visualizar Documento"><i class="material-icons p-1">visibility</i></span>
                                     </a>
-
-                                    <span data-toggle="tooltip" title="Baixar"><i class="material-icons p-1">get_app</i></span>
+                                    <a class="text-white" th:href="${(#mvc.url('MTC#downloadPdf').arg(0, texto.id)).build()}">
+                                        <span data-toggle="tooltip" title="Baixar"><i class="material-icons p-1">get_app</i></span>
+                                    </a>
                                 </div>
 
                             </div>
