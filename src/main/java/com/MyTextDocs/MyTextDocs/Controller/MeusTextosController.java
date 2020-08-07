@@ -39,6 +39,10 @@ public class MeusTextosController {
     TextoService textoService;
 
     @GetMapping("/MeusTextos")
+    public String getMeuTextos(){
+        return "/MeusTextos";
+    }
+    /*
     public ModelAndView getMeuTextos()
     {
         ModelAndView mv = new ModelAndView("MeusTextos");
@@ -48,7 +52,7 @@ public class MeusTextosController {
         return mv;
 
     }
-
+    */
     @GetMapping("/MeusTextos/{id}")
     public ModelAndView getTexto(@PathVariable long id)
     {

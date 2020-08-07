@@ -43,9 +43,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public  Optional<Usuario> verificaUsuario(String user, String senha) {
+
         List<Usuario> users = usuarioRepository.findAll();
         for ( Usuario u : users) {
-            if(u.getEmail().equalsIgnoreCase(user) && u.getSenha().equals(senha)){
+            System.out.println("U.Email: " + u.getEmail() + "U.Senha: " + u.getSenha() +" | "
+             + "FormEmail: "+ user + "FormSenha: "+ senha);
+            if(u.getEmail().equalsIgnoreCase(user) && u.getSenha().equalsIgnoreCase(senha)){
                 return Optional.of(u);
             }
         }

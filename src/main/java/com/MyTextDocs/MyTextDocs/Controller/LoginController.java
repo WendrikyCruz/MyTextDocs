@@ -16,20 +16,25 @@ public class LoginController {
     @Autowired
     UsuarioService usuarioService;
 
-    @GetMapping("/Login")
+    @GetMapping("/")
     public String loginIndex(){
         return "Login";
     }
 
-    @PostMapping("/Login")
-    public String efetuaLogin(String email, String senha, HttpSession session){
+    @PostMapping("/")
+    public ModelAndView efetuaLogin(String email, String senha, HttpSession session){
+        ModelAndView mv = new ModelAndView();
+        System.out.println("Senha "+ senha + "email "+ email);
         Usuario user = usuarioService.verificaUsuario(email, senha).get();
+        System.out.println("Nome " + user.getNome());
         if(user != null){
-            //ModelAndView mv = new ModelAndView("MeusTextos");
+            System.out.println("Entrei no if");
+            mv.setViewName("MeusTextos");
+            mv.addObject("usuario", user);
             session.setAttribute("usuarioLogado", user);
-            return "/MeusTextos";
+            return mv;
         }
-
-        return "/Login";
+        mv.setViewName("/");
+        return mv;
     }
 }
