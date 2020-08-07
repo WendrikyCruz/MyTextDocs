@@ -40,4 +40,15 @@ public class UsuarioServiceImpl implements UsuarioService {
     public Boolean deleteUsuario(Long id) {
         return null;
     }
+
+    @Override
+    public  Optional<Usuario> verificaUsuario(String user, String senha) {
+        List<Usuario> users = usuarioRepository.findAll();
+        for ( Usuario u : users) {
+            if(u.getEmail().equalsIgnoreCase(user) && u.getSenha().equals(senha)){
+                return Optional.of(u);
+            }
+        }
+        return null;
+    }
 }
