@@ -1,18 +1,14 @@
 package com.MyTextDocs.MyTextDocs.Controller;
 
+import com.MyTextDocs.MyTextDocs.Interceptor.AutorizadorInterceptor;
 import com.MyTextDocs.MyTextDocs.Models.Texto;
-import com.MyTextDocs.MyTextDocs.Models.Usuario;
 import com.MyTextDocs.MyTextDocs.Services.TextoService;
 import com.MyTextDocs.MyTextDocs.Services.UsuarioService;
 
 
 import com.itextpdf.html2pdf.HtmlConverter;
-import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Paragraph;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.*;
 
 import org.springframework.stereotype.Controller;
@@ -23,7 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -31,6 +28,8 @@ import java.nio.file.Paths;
 
 @Controller
 public class MeusTextosController {
+    @Autowired
+    AutorizadorInterceptor interceptor;
 
     @Autowired
     UsuarioService usuarioService;
@@ -39,8 +38,11 @@ public class MeusTextosController {
     TextoService textoService;
 
     @GetMapping("/MeusTextos")
-    public String getMeuTextos(){
-        return "/MeusTextos";
+    public String getMeuTextos(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if(interceptor.preHandle(request, response)){
+            return "/MeusTextos";
+        }
+        return "/";
     }
     /*
     public ModelAndView getMeuTextos()

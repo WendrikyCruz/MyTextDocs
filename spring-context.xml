@@ -1,0 +1,3 @@
+<mvc:interceptor>
+    <bean class="com.MyTextDocs.MyTextDocs.Interceptor.AutorizadorInterceptor" />
+</mvc:interceptor>
