@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @Controller
 public class LoginController {
@@ -16,25 +19,26 @@ public class LoginController {
     @Autowired
     UsuarioService usuarioService;
 
-    @GetMapping("/")
+    @GetMapping("/Login")
     public String loginIndex(){
         return "Login";
     }
 
-    @PostMapping("/")
-    public ModelAndView efetuaLogin(String email, String senha, HttpSession session){
+    @PostMapping("/Login")
+    public ModelAndView efetuaLogin(String email, String senha, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
         ModelAndView mv = new ModelAndView();
-        System.out.println("Senha "+ senha + "email "+ email);
         Usuario user = usuarioService.verificaUsuario(email, senha).get();
-        System.out.println("Nome " + user.getNome());
         if(user != null){
-            System.out.println("Entrei no if");
-            mv.setViewName("MeusTextos");
+            mv.setViewName("/MeusTextos");
             mv.addObject("usuario", user);
+            //session = request.getSession();
             session.setAttribute("usuarioLogado", user);
             return mv;
+        }else{
+            //((HttpServletResponse) response).sendRedirect("Login");
+            mv.setViewName("/Login");
+            return mv;
         }
-        mv.setViewName("/");
-        return mv;
+
     }
 }

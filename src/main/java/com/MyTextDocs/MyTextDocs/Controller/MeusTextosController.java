@@ -1,6 +1,6 @@
 package com.MyTextDocs.MyTextDocs.Controller;
 
-import com.MyTextDocs.MyTextDocs.Interceptor.AutorizadorInterceptor;
+
 import com.MyTextDocs.MyTextDocs.Models.Texto;
 import com.MyTextDocs.MyTextDocs.Services.TextoService;
 import com.MyTextDocs.MyTextDocs.Services.UsuarioService;
@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -28,8 +29,7 @@ import java.nio.file.Paths;
 
 @Controller
 public class MeusTextosController {
-    @Autowired
-    AutorizadorInterceptor interceptor;
+
 
     @Autowired
     UsuarioService usuarioService;
@@ -39,29 +39,34 @@ public class MeusTextosController {
 
     @GetMapping("/MeusTextos")
     public String getMeuTextos(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if(interceptor.preHandle(request, response)){
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        HttpSession sessao = httpServletRequest.getSession();
+        if(sessao.getAttribute("usuarioLogado") != null ){
             return "/MeusTextos";
         }
-        return "/";
-    }
-    /*
-    public ModelAndView getMeuTextos()
-    {
-        ModelAndView mv = new ModelAndView("MeusTextos");
-        Long id = Long.valueOf(5);
-        Usuario usuario = usuarioService.getUsuarioById(id).get();
-        mv.addObject(usuario);
-        return mv;
+        else{
+            return "redirect:/Login";
+        }
 
     }
-    */
+    public String redirectLogin(){
+        return "redirect:/Login";
+    }
     @GetMapping("/MeusTextos/{id}")
-    public ModelAndView getTexto(@PathVariable long id)
+    public ModelAndView getTexto(@PathVariable long id,HttpServletRequest request, HttpServletResponse response )
     {
-        Texto texto = textoService.getTextoById(id).get();
-        ModelAndView mv = new ModelAndView("VisualizarTexto");
-        mv.addObject(texto);
-        return mv;
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        HttpSession sessao = httpServletRequest.getSession();
+        if(sessao.getAttribute("usuarioLogado") != null ) {
+            Texto texto = textoService.getTextoById(id).get();
+            ModelAndView mv = new ModelAndView("VisualizarTexto");
+            mv.addObject(texto);
+            return mv;
+        }else{
+
+            ModelAndView mv = new ModelAndView("/Login");
+            return mv;
+        }
     }
 
     @GetMapping("/Editar/{id}")
