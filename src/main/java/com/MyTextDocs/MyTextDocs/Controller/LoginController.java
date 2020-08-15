@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,24 +22,33 @@ public class LoginController {
 
     @GetMapping("/Login")
     public String loginIndex(){
-        return "Login";
+
+        return "Login"; //new ModelAndView("Login");
     }
 
     @PostMapping("/Login")
     public ModelAndView efetuaLogin(String email, String senha, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
+
         ModelAndView mv = new ModelAndView();
-        Usuario user = usuarioService.verificaUsuario(email, senha).get();
-        if(user != null){
-            mv.setViewName("/MeusTextos");
-            mv.addObject("usuario", user);
-            //session = request.getSession();
-            session.setAttribute("usuarioLogado", user);
-            return mv;
-        }else{
-            //((HttpServletResponse) response).sendRedirect("Login");
+        try {
+            Usuario user = usuarioService.verificaUsuario(email, senha).get();
+            if(user != null){
+                mv.setViewName("/MeusTextos");
+                mv.addObject("usuario", user);
+                //session = request.getSession();
+                session.setAttribute("usuarioLogado", user);
+                return mv;
+            }
+        }catch(Exception e){
+            mv.addObject("msg", "Email ou senhas incorretos");
             mv.setViewName("/Login");
+
             return mv;
         }
+        mv.setViewName("/Login");
 
+        return mv;
     }
+
+
 }

@@ -52,6 +52,6 @@ public class UsuarioServiceImpl implements UsuarioService {
                 return Optional.of(u);
             }
         }
-        return null;
+        return Optional.empty();
     }
 }

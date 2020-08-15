@@ -50,23 +50,25 @@ public class MeusTextosController {
 
     }
     public String redirectLogin(){
-        return "redirect:/Login";
+        return "redirect:/Login/Login";
     }
     @GetMapping("/MeusTextos/{id}")
     public ModelAndView getTexto(@PathVariable long id,HttpServletRequest request, HttpServletResponse response )
     {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        HttpSession sessao = httpServletRequest.getSession();
-        if(sessao.getAttribute("usuarioLogado") != null ) {
-            Texto texto = textoService.getTextoById(id).get();
-            ModelAndView mv = new ModelAndView("VisualizarTexto");
-            mv.addObject(texto);
-            return mv;
-        }else{
+        try{
+            HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+            HttpSession sessao = httpServletRequest.getSession();
 
-            ModelAndView mv = new ModelAndView("/Login");
-            return mv;
+            if(sessao.getAttribute("usuarioLogado") != null ) {
+                Texto texto = textoService.getTextoById(id).get();
+                ModelAndView mv = new ModelAndView("VisualizarTexto");
+                mv.addObject(texto);
+                return mv;
+            }
+        }finally {
+            redirectLogin();
         }
+       return new ModelAndView("/Login");
     }
 
     @GetMapping("/Editar/{id}")
