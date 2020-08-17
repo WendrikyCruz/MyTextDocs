@@ -46,9 +46,19 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         List<Usuario> users = usuarioRepository.findAll();
         for ( Usuario u : users) {
-            System.out.println("U.Email: " + u.getEmail() + "U.Senha: " + u.getSenha() +" | "
-             + "FormEmail: "+ user + "FormSenha: "+ senha);
             if(u.getEmail().equalsIgnoreCase(user) && u.getSenha().equalsIgnoreCase(senha)){
+                return Optional.of(u);
+            }
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public  Optional<Usuario> getUserByUsername(String user) {
+        List<Usuario> users = usuarioRepository.findAll();
+        for ( Usuario u : users) {
+
+            if(u.getEmail().equalsIgnoreCase(user)){
                 return Optional.of(u);
             }
         }

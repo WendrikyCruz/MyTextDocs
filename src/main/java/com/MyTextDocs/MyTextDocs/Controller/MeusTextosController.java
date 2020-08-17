@@ -2,7 +2,9 @@ package com.MyTextDocs.MyTextDocs.Controller;
 
 
 import com.MyTextDocs.MyTextDocs.Models.Texto;
+import com.MyTextDocs.MyTextDocs.Models.Usuario;
 import com.MyTextDocs.MyTextDocs.Services.TextoService;
+import com.MyTextDocs.MyTextDocs.Services.UserDetailsService;
 import com.MyTextDocs.MyTextDocs.Services.UsuarioService;
 
 
@@ -11,7 +13,10 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 
+import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +30,7 @@ import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 
 @Controller
@@ -37,38 +43,29 @@ public class MeusTextosController {
     @Autowired
     TextoService textoService;
 
+    @Autowired
+    UserDetailsService userDetailsService;
+
     @GetMapping("/MeusTextos")
-    public String getMeuTextos(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        HttpSession sessao = httpServletRequest.getSession();
-        if(sessao.getAttribute("usuarioLogado") != null ){
-            return "/MeusTextos";
-        }
-        else{
-            return "redirect:/Login";
-        }
+    public ModelAndView getMeuTextos() throws Exception {
 
+        String userName = ((UserDetails)userDetailsService.getLoggedInUser()).getUsername();
+        String password = ((UserDetails)userDetailsService.getLoggedInUser()).getPassword();
+        ModelAndView mv = new ModelAndView("MeusTextos");
+        Usuario userView = usuarioService.verificaUsuario(userName, password).get();
+        mv.addObject(userView);
+        return mv;
     }
-    public String redirectLogin(){
-        return "redirect:/Login/Login";
-    }
+
+
+
     @GetMapping("/MeusTextos/{id}")
-    public ModelAndView getTexto(@PathVariable long id,HttpServletRequest request, HttpServletResponse response )
+    public ModelAndView getTexto(@PathVariable long id )
     {
-        try{
-            HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-            HttpSession sessao = httpServletRequest.getSession();
-
-            if(sessao.getAttribute("usuarioLogado") != null ) {
                 Texto texto = textoService.getTextoById(id).get();
                 ModelAndView mv = new ModelAndView("VisualizarTexto");
                 mv.addObject(texto);
                 return mv;
-            }
-        }finally {
-            redirectLogin();
-        }
-       return new ModelAndView("/Login");
     }
 
     @GetMapping("/Editar/{id}")
@@ -80,18 +77,22 @@ public class MeusTextosController {
         return mv;
     }
 
-    @PostMapping("/Editar/{id}")
+    @PostMapping("/Editar/EditarTexto")
     public String EditarTexto(Texto texto, RedirectAttributes redirectAttributes)
     {
-        Long id = Long.valueOf(5);
-        if(textoService.editTexto(texto)){
-            redirectAttributes.addFlashAttribute("mensagemEditado", "Texto Editado com Sucesso!");
-            return "redirect:/MeusTextos";
-        }
-        else{
-            redirectAttributes.addFlashAttribute("mensagem", "Algo deu errado");
+        try{
+            if(textoService.editTexto(texto)){
+                redirectAttributes.addFlashAttribute("mensagemEditado", "Texto Editado com Sucesso!");
+                return "redirect:/MeusTextos";
+            }
+            else{
+                redirectAttributes.addFlashAttribute("mensagem", "Algo deu errado");
+                return "redirect:/NovoTexto";
+            }
+        }catch(Exception e){
             return "redirect:/NovoTexto";
         }
+
     }
 
     @GetMapping("/NovoTexto")
@@ -101,9 +102,10 @@ public class MeusTextosController {
 
     @PostMapping("/NovoTexto")
     public String newTexto(Texto texto, RedirectAttributes redirectAttributes){
-        Long id = Long.valueOf(5);
-        //texto.setNome(texto.getNome()+".pdf");
-        if(textoService.newTexto(texto, id)){
+        String userName = ((UserDetails)userDetailsService.getLoggedInUser()).getUsername();
+        String password = ((UserDetails)userDetailsService.getLoggedInUser()).getPassword();
+        Usuario usuario = usuarioService.verificaUsuario(userName, password).get();
+        if(textoService.newTexto(texto, usuario.getId())){
             return "redirect:/MeusTextos";
         }
         else{

@@ -14,5 +14,5 @@ public interface UsuarioService {
     Boolean editUsuario(Usuario usuario);
     Boolean deleteUsuario(Long id);
     Optional<Usuario> verificaUsuario(String user, String senha);
-
+    Optional<Usuario> getUserByUsername(String user);
 }

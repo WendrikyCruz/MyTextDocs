@@ -34,7 +34,7 @@
         <div class="alert alert-danger alert-dismissible" role="alert" th:if="${not #strings.isEmpty(mensagem)}">
             <span th:text="${mensagem}"></span>
         </div>
-        <form method="post">
+        <form method="post" th:action="@{EditarTexto}">
             <input  name="Id" hidden th:value="${texto.Id}">
             <div class="form-group">
                 <label for="nomeDocumento">Nome Documento</label>

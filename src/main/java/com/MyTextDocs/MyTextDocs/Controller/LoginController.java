@@ -1,8 +1,11 @@
 package com.MyTextDocs.MyTextDocs.Controller;
 
+import com.MyTextDocs.MyTextDocs.Models.UserPrincipal;
 import com.MyTextDocs.MyTextDocs.Models.Usuario;
+import com.MyTextDocs.MyTextDocs.Services.UserDetailsService;
 import com.MyTextDocs.MyTextDocs.Services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +23,9 @@ public class LoginController {
     @Autowired
     UsuarioService usuarioService;
 
+    @Autowired
+    UserDetailsService userDetailsService;
+
     @GetMapping("/Login")
     public String loginIndex(){
 
@@ -27,27 +33,17 @@ public class LoginController {
     }
 
     @PostMapping("/Login")
-    public ModelAndView efetuaLogin(String email, String senha, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
+    public ModelAndView Login(String username, String password) throws IOException {
+          ModelAndView mv = new ModelAndView();
+          Usuario user = usuarioService.verificaUsuario(username, password).get();
+          mv.setViewName("/MeusTextos");
+          mv.addObject("usuario", user);
+          return mv;
+    }
 
-        ModelAndView mv = new ModelAndView();
-        try {
-            Usuario user = usuarioService.verificaUsuario(email, senha).get();
-            if(user != null){
-                mv.setViewName("/MeusTextos");
-                mv.addObject("usuario", user);
-                //session = request.getSession();
-                session.setAttribute("usuarioLogado", user);
-                return mv;
-            }
-        }catch(Exception e){
-            mv.addObject("msg", "Email ou senhas incorretos");
-            mv.setViewName("/Login");
-
-            return mv;
-        }
-        mv.setViewName("/Login");
-
-        return mv;
+    @GetMapping("/teste")
+    public String teste(){
+        return "/teste";
     }
 
 
