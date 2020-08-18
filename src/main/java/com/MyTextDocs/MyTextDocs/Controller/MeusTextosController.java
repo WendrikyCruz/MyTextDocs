@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,8 +57,6 @@ public class MeusTextosController {
         mv.addObject(userView);
         return mv;
     }
-
-
 
     @GetMapping("/MeusTextos/{id}")
     public ModelAndView getTexto(@PathVariable long id )
@@ -137,6 +136,12 @@ public class MeusTextosController {
 
         return null;
 
+    }
+
+    @GetMapping("/deletar/{id}")
+    public ModelAndView deletar(@PathVariable long id ) throws Exception {
+        textoService.deleteTexto(id);
+        return getMeuTextos();
     }
 
 

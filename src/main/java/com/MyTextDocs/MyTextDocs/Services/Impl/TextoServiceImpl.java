@@ -74,6 +74,13 @@ public class TextoServiceImpl implements TextoService {
 
     @Override
     public Boolean deleteTexto(Long id) {
-        return null;
+        try{
+            textoRepository.deleteById(id);
+            return true;
+        }catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+
     }
 }

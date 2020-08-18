@@ -33,12 +33,17 @@
                 <span th:text="${mensagem}"></span>
             </div>
             <form method="post" th:action="@{/NovoTexto}">
-                <div class="form-group">
-                    <label for="nomeDocumento">Nome Documento</label>
-                    <input id="nomeDocumento" name="Nome" type="text" class="form-control" placeholder="Nome do seu documento aqui..."/>
+                <div class="form-group row">
+                    <div class="col-12"><label for="nomeDocumento">Nome Documento</label></div>
+
+                    <div class="col-6">
+                        <input id="nomeDocumento" name="Nome" type="text" class="form-control" placeholder="Nome do seu documento aqui..."/>
+                    </div>
+
+
                 </div>
                 <textarea id="mytextarea" type="text" class="form-control" name="Texto"></textarea>
-                <button type="submit" class="btn btn-primary mt-2  btn-lg">Salvar <i class="material-icons mt-1">save</i></button>
+                    <button type="submit" class="btn btn-primary mt-2 btn-lg"> Salvar</button>
             </form>
         </div>
     </div>

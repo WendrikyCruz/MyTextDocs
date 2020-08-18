@@ -27,7 +27,7 @@
                         <a href="/MeusTextos" class="btn btn-light btn-block">Meus Documentos</a>
                         <a href="/NovoTexto" class="btn btn-light btn-block">Novo Documento</a>
                         <a href="#" class="btn btn-light btn-block">Meus Dados</a>
-                        <a href="#" class="btn btn-light btn-block">Sair</a>
+                        <a href="/Logout" class="btn btn-light btn-block">Sair</a>
                     </div>
 
             </div>
@@ -57,7 +57,7 @@
                                 <br>
                             </div>
                             <div id="icones" class="container text-white bg-primary row">
-                                <div style="padding-left: 30px;">
+                                <div style="padding-left: 5px;">
                                    <a class="text-white " th:href="${(#mvc.url('MTC#Editar').arg(0, texto.id)).build()}">
                                        <span data-toggle="tooltip" title="Editar"><i class="material-icons p-1">edit</i></span>
                                    </a>
@@ -67,6 +67,9 @@
                                     <a class="text-white" th:href="${(#mvc.url('MTC#downloadPdf').arg(0, texto.id)).build()}">
                                         <span data-toggle="tooltip" title="Baixar"><i class="material-icons p-1">get_app</i></span>
                                     </a>
+                                    <a class="text-white" th:onclick="deletar([[${texto.id}]],[[${texto.Nome}]])">
+                                        <span data-toggle="tooltip" title="Deletar"><i class="material-icons ">delete</i></span>
+                                    </a>
                                 </div>
 
                             </div>
@@ -75,7 +78,7 @@
                             <p class="card-subtitle mb-2">
                                 <small><span th:text="${texto.Nome}"></span></small>
                                 <br>
-                                    <small>Data Criação<br><span th:text="${texto.data}"></span></small>
+                                <small>Data Criação<br><span th:text="${texto.data}"></span></small>
                             </p>
                         </div>
                     </div>
@@ -111,3 +114,23 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script>
+    function deletar(id, nome){
+        var name=confirm("Deseja Deletar o documento " + nome)
+        if (name==true)
+        {
+            $.ajax({
+
+                url: '/deletar?id'+ id,
+                method: 'GET',
+                contentType: 'application/json',
+                data: id,
+                success:  function(){
+                console.log("Foi")
+                }
+            });
+
+        }
+
+    }
+</script>
