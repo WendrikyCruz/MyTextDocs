@@ -12,8 +12,26 @@
     <th:block th:include="BarraNavegacao"></th:block>
     <br>
     <br>
-    <div class="alert alert-success alert-dismissible" role="alert" th:if="${not #strings.isEmpty(mensagemEditado)}">
+    <!--Mensagem de editado com sucesso-->
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${not #strings.isEmpty(mensagemEditado)}">
         <span th:text="${mensagemEditado}"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!--Mensagem de deletado com sucesso-->
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${not #strings.isEmpty(mensagemDeletadoSucesso)}">
+        <span th:text="${mensagemDeletadoSucesso}"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!--Mensagem de erro ao deletar-->
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${not #strings.isEmpty(mensagemDeletadoErro)}">
+        <span th:text="${mensagemDeletadoErro}"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 
     <!--Conteudo-->
@@ -41,6 +59,8 @@
                     <br>
                     <a href="/NovoTexto" class="btn btn-primary">Criar Novo Texto</a>
                 </div>
+
+
                 <script>
                     function funcoes(id){
                         console.log("ID: "+id)

@@ -128,7 +128,7 @@ public class MeusTextosController {
     }
 
     @GetMapping("/MeusTextos/deletar/{idTexto}")
-    public String deletar(@PathVariable Long idTexto) throws Exception {
+    public String deletar(@PathVariable Long idTexto, RedirectAttributes redirectAttributes) throws Exception {
 
         String userName = ((UserDetails)userDetailsService.getLoggedInUser()).getUsername();
         String password = ((UserDetails)userDetailsService.getLoggedInUser()).getPassword();
@@ -136,12 +136,14 @@ public class MeusTextosController {
         Usuario user = usuarioService.verificaUsuario(userName, password).get();
         if(usuarioService.removeTextoUsuario(user.getId(), idTexto)){
             if(textoService.deleteTexto( (long)idTexto)){
+                redirectAttributes.addFlashAttribute("mensagemDeletadoSucesso", "Documento Deletado com Sucesso!");
                 return "redirect:/MeusTextos";
             }else{
-
+                redirectAttributes.addFlashAttribute("mensagemDeletadoErro", "Não Foi Possivel Deletar Documento. Problema Deletar Texto.");
+                return "redirect:/MeusTextos";
             }
         }
-
+        redirectAttributes.addFlashAttribute("mensagemDeletadoErro", "Não Foi Possivel Deletar Documento. Problema em Desvincular Texto do Usuario.");
         return "redirect:/MeusTextos";
     }
 
