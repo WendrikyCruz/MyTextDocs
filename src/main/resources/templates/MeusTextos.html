@@ -67,7 +67,9 @@
                                     <a class="text-white" th:href="${(#mvc.url('MTC#downloadPdf').arg(0, texto.id)).build()}">
                                         <span data-toggle="tooltip" title="Baixar"><i class="material-icons p-1">get_app</i></span>
                                     </a>
-                                    <a class="text-white" th:onclick="deletar([[${texto.id}]],[[${texto.Nome}]])">
+
+                                    <!-- -->
+                                    <a class="text-white" th:href="${(#mvc.url('MTC#deletar').arg(0, texto.id)).build()}" > <!--th:onclick="deletar([[${texto.id}]],[[${texto.Nome}]])"-->
                                         <span data-toggle="tooltip" title="Deletar"><i class="material-icons ">delete</i></span>
                                     </a>
                                 </div>
@@ -119,17 +121,7 @@
         var name=confirm("Deseja Deletar o documento " + nome)
         if (name==true)
         {
-            $.ajax({
-
-                url: '/deletar?id'+ id,
-                method: 'GET',
-                contentType: 'application/json',
-                data: id,
-                success:  function(){
-                console.log("Foi")
-                }
-            });
-
+           window.location.href = "MeusTextos/deletar?"+id;
         }
 
     }

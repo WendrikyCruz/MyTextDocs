@@ -1,5 +1,6 @@
 package com.MyTextDocs.MyTextDocs.Services.Impl;
 
+import com.MyTextDocs.MyTextDocs.Models.Texto;
 import com.MyTextDocs.MyTextDocs.Models.Usuario;
 import com.MyTextDocs.MyTextDocs.Repository.TextoRepository;
 import com.MyTextDocs.MyTextDocs.Repository.UsuarioRepository;
@@ -63,5 +64,21 @@ public class UsuarioServiceImpl implements UsuarioService {
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public boolean removeTextoUsuario(long idUsuario, long idTexto){
+
+        try{
+            Usuario usuario = usuarioRepository.findById(idUsuario).get();
+            for(Texto texto : usuario.getTextos()){
+                if(texto.getId() == idTexto){
+                    usuario.getTextos().remove(texto);
+                    break;
+                }}
+            return true;
+        }catch(Exception e){
+            return false;
+        }
     }
 }

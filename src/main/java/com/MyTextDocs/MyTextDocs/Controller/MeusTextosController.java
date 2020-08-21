@@ -91,7 +91,6 @@ public class MeusTextosController {
         }catch(Exception e){
             return "redirect:/NovoTexto";
         }
-
     }
 
     @GetMapping("/NovoTexto")
@@ -111,37 +110,39 @@ public class MeusTextosController {
             redirectAttributes.addFlashAttribute("mensagem", "Algo deu errado");
             return "redirect:/NovoTexto";
         }
-
     }
 
     @GetMapping("/Download/{id}")
     public HttpEntity<byte[]> downloadPdf(@PathVariable Long id) throws IOException {
-
-
         if ( textoService.getTextoById(id).isPresent()) {
             Texto texto = textoService.getTextoById(id).get();
             File file = new File(texto.getNome());
             HtmlConverter.convertToPdf(texto.getTexto(),new PdfWriter(file.getName()));
             byte[] arquivo = Files.readAllBytes( Paths.get(file.getPath()) );
-
             HttpHeaders httpHeaders = new HttpHeaders();
-
             httpHeaders.add("Content-Disposition", "attachment;filename=\""+texto.getNome()+".pdf\"");
-
             HttpEntity<byte[]> entity = new HttpEntity<byte[]>( arquivo, httpHeaders);
-
             return entity;
-
         }
-
         return null;
-
     }
 
-    @GetMapping("/deletar/{id}")
-    public ModelAndView deletar(@PathVariable long id ) throws Exception {
-        textoService.deleteTexto(id);
-        return getMeuTextos();
+    @GetMapping("/MeusTextos/deletar/{idTexto}")
+    public String deletar(@PathVariable Long idTexto) throws Exception {
+
+        String userName = ((UserDetails)userDetailsService.getLoggedInUser()).getUsername();
+        String password = ((UserDetails)userDetailsService.getLoggedInUser()).getPassword();
+        ModelAndView mv = new ModelAndView("MeusTextos");
+        Usuario user = usuarioService.verificaUsuario(userName, password).get();
+        if(usuarioService.removeTextoUsuario(user.getId(), idTexto)){
+            if(textoService.deleteTexto( (long)idTexto)){
+                return "redirect:/MeusTextos";
+            }else{
+
+            }
+        }
+
+        return "redirect:/MeusTextos";
     }
 
 

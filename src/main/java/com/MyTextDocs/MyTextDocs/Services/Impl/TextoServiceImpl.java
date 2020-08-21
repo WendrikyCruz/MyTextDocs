@@ -75,7 +75,8 @@ public class TextoServiceImpl implements TextoService {
     @Override
     public Boolean deleteTexto(Long id) {
         try{
-            textoRepository.deleteById(id);
+            Texto t = textoRepository.findById(id).get();
+            textoRepository.delete(t);
             return true;
         }catch (Exception e){
             System.out.println(e);
@@ -83,4 +84,6 @@ public class TextoServiceImpl implements TextoService {
         }
 
     }
+
+
 }
