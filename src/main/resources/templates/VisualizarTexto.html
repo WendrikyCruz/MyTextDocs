@@ -14,11 +14,29 @@
     <title>Meu Texto</title>
 </head>
 <body>
-/////
+
 <!--Navbar-->
 <th:block th:include="BarraNavegacao"></th:block>
 <br>
-<h3 class="text-center">Documento <span th:text="${texto.Nome}"></span></h3>
+<div class="row">
+    <div class="col-6 ">
+        <h3 class="pl-1">Nome Documento: <span th:text="${texto.Nome}"></span></h3>
+    </div>
+    <div class="col-2 text-left">
+        <small> Data de Criação Documento</small><br> <span th:text="${texto.data}"></span>
+    </div>
+    <div class="col-4 ">
+        <a class="text-primary " th:href="${(#mvc.url('MTC#Editar').arg(0, texto.id)).build()}">
+            <span data-toggle="tooltip" title="Editar"><span class="align-top">Editar</span> <i class="material-icons p-1">edit</i></span>
+        </a><span class="align-top"> | </span>
+        <a class="text-primary" th:href="${(#mvc.url('MTC#downloadPdf').arg(0, texto.id)).build()}">
+            <span data-toggle="tooltip" title="Baixar"><span class="align-top">PDF</span> <i class="material-icons p-1">get_app</i></span>
+        </a> <span class="align-top"> | </span>
+        <a class="text-primary" th:href="${(#mvc.url('MTC#deletar').arg(0, texto.id)).build()}" > <!--th:onclick="deletar([[${texto.id}]],[[${texto.Nome}]])"-->
+            <span data-toggle="tooltip" title="Deletar"><span class="align-top">Deletar</span> <i class="material-icons ">delete</i></span>
+        </a>
+    </div>
+</div>
 <hr>
 <br>
 <br>
@@ -27,8 +45,8 @@
     <!--Conteudo-->
 
     <div class="container">
-
         <p class="card-text"><span th:utext="${texto.Texto}"></span></p>
+
     </div>
 </div>
 

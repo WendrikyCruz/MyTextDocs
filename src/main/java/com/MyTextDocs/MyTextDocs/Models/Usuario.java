@@ -1,11 +1,12 @@
 package com.MyTextDocs.MyTextDocs.Models;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GeneratorType;
+
 
 import javax.persistence.*;
 import javax.persistence.Id;
 import javax.xml.soap.Text;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -66,4 +67,5 @@ public class Usuario {
     public void setTextos(List<Texto> textos) {
         Textos = textos;
     }
+
 }

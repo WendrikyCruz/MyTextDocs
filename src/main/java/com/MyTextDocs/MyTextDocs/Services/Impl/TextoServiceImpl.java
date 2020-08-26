@@ -33,6 +33,7 @@ public class TextoServiceImpl implements TextoService {
         return textoRepository.findById(id);
     }
 
+
     @Override
     public Optional<List<Texto>> getAllTextoByUsuario(Long idUsuario) {
 
@@ -60,11 +61,29 @@ public class TextoServiceImpl implements TextoService {
 
     @Override
     public Boolean editTexto(Texto texto) {
-        return null;
+
+        try{
+            texto.setUsuario( textoRepository.findById(texto.getId()).get().getUsuario());
+            texto.setData(LocalDate.now());
+            textoRepository.save(texto);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
     }
 
     @Override
     public Boolean deleteTexto(Long id) {
-        return null;
+        try{
+            Texto t = textoRepository.findById(id).get();
+            textoRepository.delete(t);
+            return true;
+        }catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+
     }
+
+
 }
