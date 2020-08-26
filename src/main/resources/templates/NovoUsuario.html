@@ -1,0 +1,55 @@
+<html xmlns:th="http://thymeleaf.org">
+    <head>
+        <!--Bootstrap-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <!--SummerNote-->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+        <!--Icones Google-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    </head>
+    <body>
+    <nav class="navbar navbar-expand-lg  navbar-dark bg-primary">
+        <a class="navbar-brand" href="Login.html">MyTextDocs</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li>
+                    <a id="" href="/Login" class="btn btn-primary">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container" >
+        <br>
+        <h4 class="text-center">Cadastre-se</h4>
+
+        <div class="col-3"></div>
+        <div class="card p-4 col-4">
+            <form method="post" th:action="@{/NovoUsuario}">
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" name="Nome" id="nome">
+                </div>
+                <div class="form-group">
+                    <label for="nome">E-mail</label>
+                    <input type="email" class="form-control" name="Email" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="Senha">Senha</label>
+                    <input type="password" name="Senha" class="form-control" id="Senha">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </form>
+        </div>
+
+    </div>
+    </body>
+</html>
