@@ -41,9 +41,9 @@ public class LoginController {
           return mv;
     }
 
-    @GetMapping("/teste")
-    public String teste(){
-        return "/teste";
+    @GetMapping("/NovoUsuario")
+    public String novoUsuario(){
+        return "/NovoUsuario";
     }
 
     @GetMapping("/Logout")

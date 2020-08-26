@@ -7,6 +7,19 @@
 </head>
 <body class="">
     <div class="container-fluid ">
+        <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${not #strings.isEmpty(mensagemCadastroErro)}">
+            <span th:text="${mensagemCadastroErro}"></span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${not #strings.isEmpty(mensagemCadastroSucesso)}">
+            <span th:text="${mensagemCadastroSucesso}"></span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
         <div class="row ">
             <div class="col-8 ">
                 imagens do site
@@ -32,7 +45,7 @@
                         <br>
                         <button type="submit" class="btn btn-primary btn-block">Entrar</button>
                         <small class="form-text">
-                            <a href="#">Não possui conta ainda? Bora criar uma!</a>
+                            <a href="/NovoUsuario">Não possui conta ainda? Bora criar uma!</a>
                         </small>
                     </form>
                 </div>

@@ -9,7 +9,7 @@ public class MyTextDocsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MyTextDocsApplication.class, args);
-		System.out.print(new BCryptPasswordEncoder().encode("teste"));
+
 	}
 
 }

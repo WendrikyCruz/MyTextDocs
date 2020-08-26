@@ -6,6 +6,7 @@ import com.MyTextDocs.MyTextDocs.Repository.TextoRepository;
 import com.MyTextDocs.MyTextDocs.Repository.UsuarioRepository;
 import com.MyTextDocs.MyTextDocs.Services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +30,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Boolean newUsuario(Usuario usuario) {
-        return null;
+
+        try{
+            usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
+            usuarioRepository.save(usuario);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
     }
 
     @Override
