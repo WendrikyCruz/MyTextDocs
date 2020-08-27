@@ -39,7 +39,8 @@
             <div class="form-group">
                 <label for="nomeDocumento">Nome Documento</label>
                 <input id="nomeDocumento" name="Nome" type="text" class="form-control col-6" th:value="${texto.Nome}">
-            </div>
+                <small><p class="text-danger">Obs.: Não usar caracteres especiais no Título do documento!</p></small>
+             </div>
             <textarea id="summernote" type="text" class="form-control" name="Texto">
                 <p th:text="${texto.Texto}"></p>
             </textarea>
