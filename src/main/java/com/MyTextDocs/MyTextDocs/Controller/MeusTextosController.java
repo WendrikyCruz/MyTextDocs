@@ -91,7 +91,7 @@ public class MeusTextosController {
 
     @GetMapping("/NovoTexto")
     public String getNovoTexto(){
-        return "/NovoTexto";
+        return "NovoTexto";
     }
 
     @PostMapping("/NovoTexto")
