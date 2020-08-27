@@ -1,0 +1,60 @@
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Login</title>
+</head>
+<body class="">
+    <div class="container-fluid ">
+        <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${not #strings.isEmpty(mensagemCadastroErro)}">
+            <span th:text="${mensagemCadastroErro}"></span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${not #strings.isEmpty(mensagemCadastroSucesso)}">
+            <span th:text="${mensagemCadastroSucesso}"></span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="row ">
+            <div class="col-8 " style="padding-top: 100px;">
+               <center>
+                   <h4>MyTextDocs</h4>
+                   Crie, formate e faça download dos documentos no formato PDF<br>
+                   de maneira rápida, prática e muito simples...
+               </center>
+
+            </div>
+            <div class="col-4" style="padding-top: 100px;">
+
+                <div class="card ml-5 p-3 shadow-sm bg-white rounded" style="width: 18rem;">
+
+                    <form name="f" method="post" th:action="@{/Login}">
+                        <div class="form-group">
+                            <label for="username">Email</label>
+                            <input type="email" name="username" class="form-control" id="username" aria-describedby="emailHelp">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" class="form-control" id="password">
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                        <small class="form-text">
+                            <a href="/NovoUsuario">Não possui conta ainda? Bora criar uma!</a>
+                        </small>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>

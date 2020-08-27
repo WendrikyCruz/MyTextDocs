@@ -13,5 +13,7 @@ public interface UsuarioService {
     Boolean newUsuario(Usuario usuario);
     Boolean editUsuario(Usuario usuario);
     Boolean deleteUsuario(Long id);
-
+    Optional<Usuario> verificaUsuario(String user, String senha);
+    Optional<Usuario> getUserByUsername(String user);
+    boolean removeTextoUsuario(long idUsuario, long idTexto);
 }

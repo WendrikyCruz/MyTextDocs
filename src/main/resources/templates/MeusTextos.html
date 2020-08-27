@@ -1,5 +1,6 @@
 <html xmlns:th="http://thymeleaf.org">
     <head>
+
         <!--Bootstrap-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <!--Icones Google-->
@@ -11,6 +12,27 @@
     <th:block th:include="BarraNavegacao"></th:block>
     <br>
     <br>
+    <!--Mensagem de editado com sucesso-->
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${not #strings.isEmpty(mensagemEditado)}">
+        <span th:text="${mensagemEditado}"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!--Mensagem de deletado com sucesso-->
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${not #strings.isEmpty(mensagemDeletadoSucesso)}">
+        <span th:text="${mensagemDeletadoSucesso}"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!--Mensagem de erro ao deletar-->
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${not #strings.isEmpty(mensagemDeletadoErro)}">
+        <span th:text="${mensagemDeletadoErro}"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 
     <!--Conteudo-->
     <div class="container-fluid">
@@ -22,13 +44,9 @@
                         <br>
                         <a href="/MeusTextos" class="btn btn-light btn-block">Meus Documentos</a>
                         <a href="/NovoTexto" class="btn btn-light btn-block">Novo Documento</a>
-                        <a href="#" class="btn btn-light btn-block">Meus Dados</a>
-                        <a href="#" class="btn btn-light btn-block">Sair</a>
+                        <a href="/Logout" class="btn btn-light btn-block">Sair</a>
                     </div>
-
             </div>
-
-
             <div class="col-8">
                 <h3 class="text-center">Meus Documentos</h3>
                 <hr>
@@ -37,13 +55,6 @@
                     <br>
                     <a href="/NovoTexto" class="btn btn-primary">Criar Novo Texto</a>
                 </div>
-                <script>
-                    function funcoes(id){
-                        console.log("ID: "+id)
-                    }
-
-
-                </script>
                 <div class="row">
                     <div th:each="texto : ${usuario.Textos}" class="col-3 pb-2 btn" th:onclick="funcoes([[${texto.id}]])">
 
@@ -53,15 +64,21 @@
                                 <br>
                             </div>
                             <div id="icones" class="container text-white bg-primary row">
-                                <div style="padding-left: 30px;">
-                                   <a >
+                                <div style="padding-left: 5px;">
+                                   <a class="text-white " th:href="${(#mvc.url('MTC#Editar').arg(0, texto.id)).build()}">
                                        <span data-toggle="tooltip" title="Editar"><i class="material-icons p-1">edit</i></span>
                                    </a>
                                     <a class="text-white" th:href="${(#mvc.url('MTC#getTexto').arg(0, texto.id)).build()}">
                                         <span data-toggle="tooltip" title="Visualizar Documento"><i class="material-icons p-1">visibility</i></span>
                                     </a>
+                                    <a class="text-white" th:href="${(#mvc.url('MTC#downloadPdf').arg(0, texto.id)).build()}">
+                                        <span data-toggle="tooltip" title="Baixar"><i class="material-icons p-1">get_app</i></span>
+                                    </a>
 
-                                    <span data-toggle="tooltip" title="Baixar"><i class="material-icons p-1">get_app</i></span>
+                                    <!-- -->
+                                    <a class="text-white" th:href="${(#mvc.url('MTC#deletar').arg(0, texto.id)).build()}" > <!--th:onclick="deletar([[${texto.id}]],[[${texto.Nome}]])"-->
+                                        <span data-toggle="tooltip" title="Deletar"><i class="material-icons ">delete</i></span>
+                                    </a>
                                 </div>
 
                             </div>
@@ -70,7 +87,7 @@
                             <p class="card-subtitle mb-2">
                                 <small><span th:text="${texto.Nome}"></span></small>
                                 <br>
-                                    <small>Data Criação<br><span th:text="${texto.data}"></span></small>
+                                <small>Data Criação<br><span th:text="${texto.data}"></span></small>
                             </p>
                         </div>
                     </div>
@@ -106,3 +123,14 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script>
+    function deletar(id, nome){
+        var name=confirm("Deseja Deletar o documento " + nome)
+        if (name==true)
+        {
+           window.location.href = "MeusTextos/deletar?"+id;
+        }
+
+    }
+</script>
+
