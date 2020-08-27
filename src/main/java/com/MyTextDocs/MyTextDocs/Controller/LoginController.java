@@ -36,7 +36,7 @@ public class LoginController {
     public ModelAndView Login(String username, String password) throws IOException {
           ModelAndView mv = new ModelAndView();
           Usuario user = usuarioService.verificaUsuario(username, password).get();
-          mv.setViewName("/MeusTextos");
+          mv.setViewName("MeusTextos");
           mv.addObject("usuario", user);
           return mv;
     }

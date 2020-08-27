@@ -23,9 +23,9 @@ public class NovoUsuarioController {
     public String NovoUsuario(Usuario usuario, RedirectAttributes redirectAttributes){
        if( usuarioService.newUsuario(usuario)){
            redirectAttributes.addFlashAttribute("mensagemCadastroSucesso", "Cadastro concluído com sucesso!.");
-           return "/Login";
+           return "Login";
        }
         redirectAttributes.addFlashAttribute("mensagemCadastroErro", "Não Foi Possivel Concluir o cadastro.");
-        return "/Login";
+        return "Login";
     }
 }
