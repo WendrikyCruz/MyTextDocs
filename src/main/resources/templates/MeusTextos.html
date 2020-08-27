@@ -134,3 +134,14 @@
     }
 </script>
 
+<script>
+    function deletar(id, nome){
+        var name=confirm("Deseja Deletar o documento " + nome)
+        if (name==true)
+        {
+           window.location.href = "MeusTextos/deletar?"+id;
+        }
+
+    }
+</script>
+
