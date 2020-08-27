@@ -16,7 +16,7 @@ public class NovoUsuarioController {
 
     @GetMapping("/NovoUsuario")
     public String novoUsuarioPage(){
-        return "/NovoUsuario";
+        return "NovoUsuario";
     }
 
     @PostMapping("/NovoUsuario")
