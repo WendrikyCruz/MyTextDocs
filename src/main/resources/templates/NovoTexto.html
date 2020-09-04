@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
 <head>
+
     <!--Bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <!--SummerNote-->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+
     <!--Icones Google-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <!--Tinymce-->
-    <script src="https://cdn.tiny.cloud/1/8r5ixvm7b8nlph0vwigtknjf3obqarzin1kqpdv0sxdjm5lj/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <!--Ckeditor-->
+    <script src="/js/ckeditor/ckeditor.js"></script>
 
     <title>Novo Texto</title>
 </head>
@@ -28,6 +24,7 @@
 
         <!--Conteudo-->
 
+
         <div class="container">
             <div class="alert alert-danger alert-dismissible" role="alert" th:if="${not #strings.isEmpty(mensagem)}">
                 <span th:text="${mensagem}"></span>
@@ -41,27 +38,15 @@
                         <small><p class="text-danger">Obs.: Não usar caracteres especiais no Título do documento!</p></small>
                     </div>
 
-
-
                 </div>
-                <textarea id="mytextarea" type="text" class="form-control" name="Texto"></textarea>
+                <textarea id="txtArea" type="text" class="form-control" name="Texto"></textarea>
                     <button type="submit" class="btn btn-primary mt-2 btn-lg"> Salvar</button>
             </form>
         </div>
     </div>
 
 
-    <script>
-    tinymce.init({
-      selector: 'textarea',
-      plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
-      toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
-      toolbar_mode: 'floating',
-      tinycomments_mode: 'embedded',
-      tinycomments_author: 'Author name',
-    });
-  </script>
-
+    <script> CKEDITOR.replace('txtArea'); </script>
 
 </body>
 </html>
